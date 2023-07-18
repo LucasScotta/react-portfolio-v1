@@ -3,5 +3,11 @@
   "cheer": "my name is Lucas and",
   "phrasePrefix": "I'm",
   "footerText": "This page of the portfolio belongs to a list of projects developed entirely in React. You can see it",
-  "footerAction": "here"
+  "footerAction": "here",
+  "contactFormNamePlaceholder": "Anya",
+  "contactFormEmailPlaceholder": "anya_taylor-joy@gmail.com",
+  "contactFormNameLabel": "Name",
+  "contactFormEmailLabel": "Email",
+  "contactFormMessageLabel": "Message:",
+  "contactFormSendButton": "Send message"
 }

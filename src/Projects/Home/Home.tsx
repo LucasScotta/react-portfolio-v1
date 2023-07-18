@@ -3,8 +3,8 @@ import { Footer, Navbar, Separator } from '../../Components'
 import { descriptionList } from './constants'
 import { githubLink } from '../../constants'
 import { useLanguage } from './Hooks'
-import './styles/home.css'
 import { Contact, Projects } from './Views'
+import './styles/home.css'
 
 
 const Home = () => {
@@ -41,7 +41,7 @@ const Home = () => {
       <Separator />
       <Projects />
       <Separator />
-      <Contact />
+      <Contact getText={getText} />
       <section>
         <Footer>
           <h3>

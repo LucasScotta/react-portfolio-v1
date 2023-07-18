@@ -1,7 +1,13 @@
 {
-  "welcome": "Hola",
+  "welcome": "Bienvenido",
   "cheer": "mi nombre es Lucas y",
   "phrasePrefix": "soy",
-  "footerText": "Esta página del portfolio pertenece a una lista de proyectos desarrollados en react, puedes verlo",
-  "footerAction": "acá"
+  "footerText": "Esta pagina del portfolio pretence a una lista de project desarrollados completamente en React. Puedes verlos",
+  "footerAction": "acá",
+  "contactFormNamePlaceholder": "Maru",
+  "contactFormEmailPlaceholder": "marubotana_cocina@gmail.com",
+  "contactFormNameLabel": "Nombre",
+  "contactFormEmailLabel": "Email",
+  "contactFormMessageLabel": "Mensaje:",
+  "contactFormSendButton": "Enviar mensaje"
 }
