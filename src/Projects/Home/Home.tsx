@@ -1,48 +1,30 @@
 import { useState, useEffect } from 'react'
 import { Footer, Navbar, Separator } from '../../Components'
-import { Language } from './Model'
-import { getLanguage, persistLanguage } from './utils'
-import ES_LANG from './text/es.json'
-import EN_LANG from './text/en.json'
 import { descriptionList } from './constants'
 import { githubLink } from '../../constants'
+import { useLanguage } from './Hook'
+import './styles/home.css'
 
-const defaultLanguage: Language = 'es'
-const text = {
-  'es': ES_LANG,
-  'en': EN_LANG
-}
 
 const Home = () => {
-  const [language, setLanguage] = useState<Language>(getLanguage())
-  const [description, setDescription] = useState<string>(descriptionList[language][0])
+  const [indexDescription, setIndexDescription] = useState<number>(0)
+  const { language, switchLanguage, getText } = useLanguage()
 
   useEffect(() => {
-    persistLanguage(language)
     const changeDescription = () => {
-      setDescription(currentString => {
+      setIndexDescription((currentIndex) => {
         const list = descriptionList[language]
-        const currentIndex = list.findIndex(str => str === currentString)
         const index = currentIndex + 1 === list.length ? 0 : currentIndex + 1
-        return list[index]
+        return index
       })
     }
-    changeDescription()
+
     const interval = setInterval(changeDescription, 1000)
 
     return () => {
       clearInterval(interval)
     }
   }, [language])
-
-  const getText = (key: string) => {
-    if (!(language in text)) return (text[defaultLanguage] as { [key: string]: string })[key]
-    return (text[language] as { [key: string]: string })[key]
-  }
-
-  const switchLanguage = () => {
-    setLanguage(prev => prev === 'es' ? 'en' : 'es')
-  }
 
   return (
     <main className='home-page-container'>
@@ -51,8 +33,9 @@ const Home = () => {
           <button onClick={switchLanguage}>{language}</button>
         </Navbar>
       </section>
-      <section>
-        <h1>{getText('welcome')} {getText('phrasePrefix')} {description}</h1>
+      <section className="home-welcome">
+        <h1>{getText('welcome')} {getText('cheer')}</h1>
+        <h2>{getText('phrasePrefix')} {descriptionList[language][indexDescription]}</h2>
       </section>
       <Separator />
       <section>
