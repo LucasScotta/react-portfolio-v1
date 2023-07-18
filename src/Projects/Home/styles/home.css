@@ -1,3 +1,11 @@
+.home-page-container {
+  min-width: auto;
+}
+
+.home-page-container .home-welcome h2 {
+  user-select: none;
+}
+
 .home-page-container .home-welcome {
   line-height: 0.5;
   text-align: center;
