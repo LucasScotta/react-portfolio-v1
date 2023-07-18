@@ -5,11 +5,13 @@ import { githubLink } from '../../constants'
 import { useLanguage } from './Hooks'
 import { Contact, Projects } from './Views'
 import './styles/home.css'
+import { useNavigate } from 'react-router-dom'
 
 
 const Home = () => {
   const [indexDescription, setIndexDescription] = useState<number>(0)
   const { language, switchLanguage, getText } = useLanguage()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const changeDescription = () => {
@@ -31,7 +33,7 @@ const Home = () => {
     <main className='home-page-container'>
       <section>
         <Navbar>
-          <select onChange={(e) => switchLanguage(e.target.value)}>
+          <select onChange={(e) => switchLanguage(e.target.value)} defaultValue={language}>
             {
               languages.map(language => <option key={language}>{language}</option>)
             }
@@ -53,6 +55,11 @@ const Home = () => {
               {getText('footerAction')}
             </a>
           </h3>
+          <p>Si sabes programar, me gustaria pedirte encarecidamente que intentes romper mi pagina como sea. Y de lograrlo, enviame el feed-back mediante el <a href="/" onClick={(e) => {
+            e.preventDefault()
+            navigate('/asdasd', { replace: true })
+          }}>formulario de contacto</a> para arreglar bugs o posibles fugas de seguridad que no haya tenido en cuenta.</p>
+          <p>Por ejemplo, puedes intentar settear un lenguage que no sea Ingles, Español ni Frances desde la consola usando el almacenamiento local con la clave <strong>language</strong>, y ver que pasa.</p>
         </Footer>
       </section>
     </main>

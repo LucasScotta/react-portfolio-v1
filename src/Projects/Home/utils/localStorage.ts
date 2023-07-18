@@ -9,12 +9,16 @@ export const getLanguage = () => {
     if (!item) return defaultLanguage
 
     const language: unknown = JSON.parse(item)
-    if (!isLanguage(language)) return defaultLanguage
+    if (!isLanguage(language)) {
+      console.log('¿?')
+      persistLanguage(defaultLanguage)
+      return defaultLanguage
+    }
 
     return isLanguage(language) ? language : defaultLanguage
   }
   catch (e) {
-    console.log('Error parsing language\n', e)
+    console.log('nice try ,)')
     persistLanguage(defaultLanguage)
     return defaultLanguage
   }
