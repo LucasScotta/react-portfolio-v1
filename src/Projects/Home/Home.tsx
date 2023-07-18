@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Footer, Navbar, Separator } from '../../Components'
 import { descriptionList } from './constants'
 import { githubLink } from '../../constants'
-import { useLanguage } from './Hook'
+import { useLanguage } from './Hooks'
 import './styles/home.css'
 
 

@@ -1,3 +1,7 @@
 {
-  "welcome": "Welcome!"
+  "welcome": "Welcome",
+  "cheer": "my name is Lucas and",
+  "phrasePrefix": "I'm",
+  "footerText": "This page of the portfolio belongs to a list of projects developed entirely in React. You can see it",
+  "footerAction": "here"
 }
