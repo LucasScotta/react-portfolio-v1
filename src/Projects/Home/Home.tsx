@@ -4,6 +4,7 @@ import { descriptionList } from './constants'
 import { githubLink } from '../../constants'
 import { useLanguage } from './Hooks'
 import './styles/home.css'
+import { Projects } from './Views'
 
 
 const Home = () => {
@@ -25,7 +26,7 @@ const Home = () => {
       clearInterval(interval)
     }
   }, [language])
-
+  const rotativeText = descriptionList[language][indexDescription]
   return (
     <main className='home-page-container'>
       <section>
@@ -35,12 +36,10 @@ const Home = () => {
       </section>
       <section className="home-welcome">
         <h1>{getText('welcome')} {getText('cheer')}</h1>
-        <h2>{getText('phrasePrefix')} {descriptionList[language][indexDescription]}</h2>
+        <h2>{getText('phrasePrefix')} {rotativeText}</h2>
       </section>
       <Separator />
-      <section>
-        <p>Proyectos</p>
-      </section>
+      <Projects />
       <section>
         <Footer>
           <h3>
