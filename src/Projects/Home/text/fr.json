@@ -1,0 +1,13 @@
+{
+  "welcome": "Bienvenue",
+  "cheer": "je m'appelle Lucas et",
+  "phrasePrefix": "je suis",
+  "footerText": "Cette page du portfolio appartient à une liste de projets développés entièrement en React. Vous pouvez les voir",
+  "footerAction": "ici",
+  "contactFormNamePlaceholder": "Marie",
+  "contactFormEmailPlaceholder": "marubotana_cocina@gmail.com",
+  "contactFormNameLabel": "Nom",
+  "contactFormEmailLabel": "Email",
+  "contactFormMessageLabel": "Message :",
+  "contactFormSendButton": "Envoyer le message"
+}
