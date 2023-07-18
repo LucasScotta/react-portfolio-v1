@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Footer, Navbar, Separator } from '../../Components'
-import { descriptionList } from './constants'
+import { descriptionList, languages } from './constants'
 import { githubLink } from '../../constants'
 import { useLanguage } from './Hooks'
 import { Contact, Projects } from './Views'
@@ -31,7 +31,11 @@ const Home = () => {
     <main className='home-page-container'>
       <section>
         <Navbar>
-          <button onClick={switchLanguage}>{language}</button>
+          <select onChange={(e) => switchLanguage(e.target.value)}>
+            {
+              languages.map(language => <option key={language}>{language}</option>)
+            }
+          </select>
         </Navbar>
       </section>
       <section className="home-welcome">

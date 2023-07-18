@@ -30,7 +30,7 @@ export const Contact: FC<ContactProps> = ({ getText }) => {
       <input name='email' id='home-contact-mail' required autoComplete='false' type='email' placeholder={getText('contactFormEmailPlaceholder')} />
     </div>
     <label htmlFor='home-contact-message'>{getText('contactFormMessageLabel')}</label>
-    <textarea id='home-contact-message' name='message' required />
+    <textarea id='home-contact-message' name='message' required placeholder={getText('contactFormMessagePlaceHolder')} />
     <button>{getText('contactFormSendButton')}</button>
   </form>
 }

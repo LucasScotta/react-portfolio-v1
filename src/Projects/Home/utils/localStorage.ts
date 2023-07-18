@@ -1,9 +1,8 @@
 import { Language } from '../Model'
-import { defaultLanguage } from '../constants'
+import { defaultLanguage, isLanguage } from '../constants'
 
 
 export const getLanguage = () => {
-  const isLanguage = (value: unknown): value is Language => typeof value === 'string' && (value === 'es' || value === 'en')
 
   try {
     const item = localStorage.getItem('language')

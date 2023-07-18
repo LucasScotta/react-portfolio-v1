@@ -6,6 +6,7 @@ type DescriptionList = {
   'fr': string[]
 }
 
+export const isLanguage = (value: unknown): value is Language => typeof value === 'string' && (value === 'es' || value === 'en' || value === 'fr')
 export const defaultLanguage: Language = 'es'
 export const languages: Language[] = ['es', 'en', 'fr']
 export const descriptionList: DescriptionList = {
