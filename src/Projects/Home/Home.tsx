@@ -4,7 +4,7 @@ import { descriptionList } from './constants'
 import { githubLink } from '../../constants'
 import { useLanguage } from './Hooks'
 import './styles/home.css'
-import { Projects } from './Views'
+import { Contact, Projects } from './Views'
 
 
 const Home = () => {
@@ -40,6 +40,8 @@ const Home = () => {
       </section>
       <Separator />
       <Projects />
+      <Separator />
+      <Contact />
       <section>
         <Footer>
           <h3>
