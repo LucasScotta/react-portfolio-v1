@@ -1,0 +1,18 @@
+.home-welcome {
+  line-height: 0.5;
+  text-align: center;
+  height: 100%;
+}
+
+.home-welcome h2 {
+  font-weight: bold;
+  padding: 32px 0;
+  font-size: 80px;
+  background: linear-gradient(to right, #60b0c4, #fdfdfd, #60b0c4);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+}
