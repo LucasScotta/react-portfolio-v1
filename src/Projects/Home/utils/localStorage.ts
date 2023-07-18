@@ -1,5 +1,5 @@
-import { defaultLanguage } from '../../../constants'
 import { Language } from '../Model'
+import { defaultLanguage } from '../constants'
 
 
 export const getLanguage = () => {
@@ -9,3 +9,5 @@ export const getLanguage = () => {
 
   return defaultLanguage
 }
+
+export const persistLanguage = (language: Language) => localStorage.setItem('language', JSON.stringify(language))
