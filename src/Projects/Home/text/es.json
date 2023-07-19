@@ -10,5 +10,10 @@
   "contactFormNameLabel": "Nombre",
   "contactFormEmailLabel": "Email",
   "contactFormMessageLabel": "Mensaje:",
-  "contactFormSendButton": "Enviar mensaje"
+  "contactFormSendButton": "Enviar mensaje",
+  "footerParagraphOnePartOne": "Si sabes programar, me gustaría pedirte que intentes romper mi sitio web de cualquier manera. Si tienes éxito, por favor envíame tus comentarios a través del",
+  "footerParagraphOneLink": "formulario de contacto",
+  "footerParagraphOnePartTwo": "para corregir cualquier error o posible brecha de seguridad que haya pasado por alto.",
+  "footerParagraphTwoPartOne": "Por ejemplo, puedes intentar establecer un idioma diferente al inglés, español o francés desde la consola utilizando el almacenamiento local con la clave",
+  "footerParagraphTwoPartTwo": "y observar qué sucede."
 }

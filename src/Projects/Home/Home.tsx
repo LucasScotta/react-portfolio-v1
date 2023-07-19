@@ -1,17 +1,14 @@
 import { useState, useEffect } from 'react'
-import { Footer, Navbar, Separator } from '../../Components'
+import { Anchor, Footer, Navbar, Separator } from '../../Components'
 import { descriptionList, languages } from './constants'
-import { githubLink } from '../../constants'
+import { githubLink, projectsPath } from '../../constants'
 import { useLanguage } from './Hooks'
 import { Contact, Projects } from './Views'
 import './styles/home.css'
-import { useNavigate } from 'react-router-dom'
-
 
 const Home = () => {
   const [indexDescription, setIndexDescription] = useState<number>(0)
   const { language, switchLanguage, getText } = useLanguage()
-  const navigate = useNavigate()
 
   useEffect(() => {
     const changeDescription = () => {
@@ -47,19 +44,16 @@ const Home = () => {
       <Separator />
       <Projects />
       <Separator />
-      <Contact getText={getText} />
+      <Contact id='Home-Form' getText={getText} />
       <section>
         <Footer>
           <h3>
-            {getText('footerText')} <a href={githubLink} target='_blank'>
+            {getText('footerText')} <Anchor path={githubLink} target='_blank'>
               {getText('footerAction')}
-            </a>
+            </Anchor>
           </h3>
-          <p>Si sabes programar, me gustaria pedirte encarecidamente que intentes romper mi pagina como sea. Y de lograrlo, enviame el feed-back mediante el <a href="/" onClick={(e) => {
-            e.preventDefault()
-            navigate('/asdasd', { replace: true })
-          }}>formulario de contacto</a> para arreglar bugs o posibles fugas de seguridad que no haya tenido en cuenta.</p>
-          <p>Por ejemplo, puedes intentar settear un lenguage que no sea Ingles, Español ni Frances desde la consola usando el almacenamiento local con la clave <strong>language</strong>, y ver que pasa.</p>
+          <p>{getText('footerParagraphOnePartOne')} <Anchor path={`${projectsPath.HOME}#Home-Form`} target='_self'>{getText('footerParagraphOneLink')}</Anchor> {getText('footerParagraphOnePartTwo')}</p>
+          <p>{getText('footerParagraphTwoPartOne')} <strong>language</strong> {getText('footerParagraphTwoPartTwo')}</p>
         </Footer>
       </section>
     </main>

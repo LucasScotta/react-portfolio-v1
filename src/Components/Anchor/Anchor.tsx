@@ -9,7 +9,7 @@ interface AnchorProps {
 
 export const Anchor: FC<AnchorProps> = ({ children, path, target }) => {
   const navigate = useNavigate()
-  if (target) return <a href={path} target={target} />
+  if (target) return <a href={path} target={target} children={children} />
   const anchorClick = (e: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) => {
     if (e.button === 0) {
       // Primary click, left as default
@@ -18,5 +18,5 @@ export const Anchor: FC<AnchorProps> = ({ children, path, target }) => {
       navigate(path, { replace: true })
     }
   }
-  return <a href={path} onClick={anchorClick}>{children}</a>
+  return <a href={path} onClick={anchorClick} children={children} />
 }

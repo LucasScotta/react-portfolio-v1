@@ -6,8 +6,8 @@ interface FormInputs {
   email: HTMLInputElement
   message: HTMLTextAreaElement
 }
-interface ContactProps { getText: (key: string) => string }
-export const Contact: FC<ContactProps> = ({ getText }) => {
+interface ContactProps { id?: string, getText: (key: string) => string }
+export const Contact: FC<ContactProps> = ({ id, getText }) => {
 
   const contactMe = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -20,7 +20,7 @@ export const Contact: FC<ContactProps> = ({ getText }) => {
     message
   }
 
-  return <form className='Home-Contact-Form' onSubmit={contactMe}>
+  return <form id={id || ''} className='Home-Contact-Form' onSubmit={contactMe}>
     <div className='home-contact-group'>
       <label htmlFor='home-contact-name'>{getText('contactFormNameLabel')}</label>
       <input name='name' id='home-contact-name' required autoComplete='false' type='text' placeholder={getText('contactFormNamePlaceholder')} />
