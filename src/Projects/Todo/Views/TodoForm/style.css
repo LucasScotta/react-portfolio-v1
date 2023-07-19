@@ -1,0 +1,9 @@
+.Todo-Form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Todo-Form * {
+  text-align: center;
+}
