@@ -3,4 +3,7 @@ export const projectsPath = {
   TODO: '/todo'
 }
 
+export const localStorageKeys = {
+  todo: 'todos',
+}
 export const githubLink = 'https://github.com/LucasScotta/react-portfolio'
