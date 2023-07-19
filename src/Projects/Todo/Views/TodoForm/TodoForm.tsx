@@ -1,10 +1,8 @@
-import { FC, FormEvent } from 'react'
+import { useContext } from 'react'
+import { TodoContext } from '../../Context/TodoContext'
 
-interface TodoFormProps {
-  addTodo: (e: FormEvent<HTMLFormElement>) => void
-}
-
-export const TodoForm: FC<TodoFormProps> = ({ addTodo }) => {
+export const TodoForm = () => {
+  const { addTodo } = useContext(TodoContext)
   return <form onSubmit={addTodo}>
     <input type='text' name='name' />
     <textarea name='description' />
