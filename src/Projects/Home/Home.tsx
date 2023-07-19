@@ -38,8 +38,8 @@ const Home = () => {
         </Navbar>
       </section>
       <section className="home-welcome">
-        <h1>{getText('welcome')} {getText('cheer')}</h1>
-        <h2>{getText('phrasePrefix')} {rotativeText}</h2>
+        <h1>{getText('welcome')} {getText('cheer')} {getText('phrasePrefix')}</h1>
+        <h2>{rotativeText.toUpperCase()}</h2>
       </section>
       <Separator />
       <Projects />
