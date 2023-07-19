@@ -4,8 +4,8 @@ import { Todo } from '../Models'
 interface ITodoContext {
   todos: Todo[],
   setTodos: Dispatch<Todo[]>,
-  switchChecked: (id: string) => void,
+  switchChecked: (id: number) => void,
   addTodo: (e: FormEvent<HTMLFormElement>) => void,
-  removeTodo: (id: string) => void
+  removeTodo: (id: number) => void
 }
 export const TodoContext = createContext({} as ITodoContext)
