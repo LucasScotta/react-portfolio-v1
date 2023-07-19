@@ -1,6 +1,8 @@
 export const projectsPath = {
   HOME: '/',
-  TODO: '/todo'
+  TODO: '/todo',
+  TATETI: '/tateti',
+  TIKTAKTOE: '/tiktaktoe'
 }
 
 export const localStorageKeys = {
