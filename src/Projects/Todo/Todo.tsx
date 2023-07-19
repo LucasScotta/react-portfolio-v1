@@ -1,58 +1,54 @@
-import { useState, useEffect, FormEvent } from 'react'
-import './styles/main.css'
+import { FormEvent } from 'react'
 import { Todo } from './Models'
-import { getTodos, persistData } from './utils'
+import { useLocalStorage } from '../../Hooks'
+import { localStorageKeys } from '../../constants'
+import { isTodoArray } from './utils'
+import { TodoForm, Todos } from './Views'
+import './styles/main.css'
+
 interface TodoInputs {
   name: HTMLInputElement
   description: HTMLInputElement
 }
 
+const defaultTodos: Todo[] = []
 const ToDo = () => {
-  const [todos, setTodos] = useState<Todo[]>(getTodos())
-
-  useEffect(() => {
-    persistData(todos)
-    const listenLocalStorage = (e: StorageEvent) => e.key === 'todos' && setTodos(getTodos())
-    window.addEventListener('storage', listenLocalStorage)
-    return () => {
-      window.removeEventListener('storage', listenLocalStorage)
-    }
-  }, [todos])
+  const localStorageData = { key: localStorageKeys.todo, defaultValue: defaultTodos, validator: isTodoArray }
+  const {
+    storage: todos,
+    setStorage: setTodos
+  } = useLocalStorage(localStorageData)
 
   const addTodo = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const target = e.target as typeof e.target & TodoInputs
     const { description, name } = target
-    setTodos([...todos, { id: crypto.randomUUID(), name: name.value, description: description.value, finished: false }])
+    if (!name.value) return
+    const todo = {
+      id: crypto.randomUUID(),
+      name: name.value.slice(0),
+      description: description.value.slice(0),
+      finished: false
+    }
+    setTodos(prev => [...prev, todo])
+    name.value = ''
+    description.value = ''
   }
-  const switchChecked = (todo: Todo) => {
+
+  const switchChecked = (id: string) => {
     setTodos(prev => prev.map(t => {
-      if (t.id !== todo.id) return t
+      if (t.id !== id) return t
       return { ...t, finished: !t.finished }
     }))
   }
-  const remove = (todo: Todo) => {
-    setTodos(prev => prev.filter(t => t.id !== todo.id))
+
+  const removeTodo = (id: string) => {
+    setTodos(prev => prev.filter(t => t.id !== id))
   }
   return <main className='todo-project-main'>
-    <form onSubmit={addTodo}>
-      <input type='text' name='name' />
-      <textarea name='description' />
-      <button>Add</button>
-    </form>
-    <ul>
-      {
-        todos.map(todo => {
-          const { id, name, description, finished } = todo
-          return <li key={id}>
-            <h3>{name.slice(0, 1).toUpperCase() + name.slice(1).toLowerCase()}</h3>
-            <p>{description}</p>
-            <input type='checkbox' checked={finished} onChange={() => switchChecked(todo)} />
-            <p onClick={() => remove(todo)}>X</p>
-          </li>
-        })
-      }
-    </ul>
+    <h1>Todo App</h1>
+    <TodoForm addTodo={addTodo} />
+    <Todos todos={todos} switchChecked={switchChecked} removeTodo={removeTodo} />
   </main>
 }
 
