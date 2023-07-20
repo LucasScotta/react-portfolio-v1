@@ -24,7 +24,7 @@ const isWinner = (dif: TBoard, turn: Player) => {
   }
   return false
 }
-const isDraw = (board: TBoard) => board.every(cell => cell.includes(Player.X) || cell.includes(Player.O))
+const isDraw = (board: TBoard) => board.every(cell => cell !== '')
 const emptyBoard = Array(9).fill('')
 const Tateti = () => {
   const [board, setBoard] = useState<TBoard>(emptyBoard)
@@ -55,7 +55,7 @@ const Tateti = () => {
     <h1>Tateti App</h1>
     <button onClick={resetGame}>Restart</button>
     <Board board={board} updateCell={updateCell} />
-    <Turn winner={winner} turn={turn} />
+    <Turn winner={winner} draw={draw} turn={turn} />
     <Results winner={winner} draw={draw} />
   </main>
 }
