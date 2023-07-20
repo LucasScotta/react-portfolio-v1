@@ -1,14 +1,12 @@
-import { useContext } from 'react'
-import { Board, Results, Scores, Turn } from './Components'
-import { GameContext, GameContextProvider } from './Context/GameContext'
+import { Board, Restart, Results, Scores, Turn } from './Components'
+import { GameContextProvider } from './Context/GameContext'
 import './style/main.css'
 
 const Tateti = () => {
-  const { resetGame } = useContext(GameContext)
   return <GameContextProvider>
     <main className="Tateti-Project">
       <h1>Tateti App</h1>
-      <button onClick={resetGame}>Restart</button>
+      <Restart />
       <Board />
       <Scores />
       <Turn />
