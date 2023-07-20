@@ -27,13 +27,20 @@ const isWinner = (dif: TBoard, turn: Player) => {
 const isDraw = (board: TBoard) => board.every(cell => cell.includes(Player.X) || cell.includes(Player.O))
 const emptyBoard = Array(9).fill('')
 const Tateti = () => {
-  const [board, setBoard] = useState<(Player | '')[]>(emptyBoard)
+  const [board, setBoard] = useState<TBoard>(emptyBoard)
   const [turn, setTurn] = useState<Player>(Player.X)
-
+  const [winner, setWinner] = useState<Player | ''>('')
+  const [draw, setDraw] = useState(false)
   const updateCell = (index: number) => {
-    if (board[index]) return
+    if (board[index] || winner) return
     const dif = [...board]
     dif[index] = turn
+    if (isWinner(dif, turn)) {
+      setWinner(turn)
+    }
+    if (isDraw(dif)) {
+      setDraw(true)
+    }
     setBoard(dif)
     setTurn(turn === Player.X ? Player.O : Player.X)
   }
