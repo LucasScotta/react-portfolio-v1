@@ -1,14 +1,9 @@
-import { FC } from 'react'
-import { Player } from '../../constants'
+import { useContext } from 'react'
+import { GameContext } from '../../Context/GameContext'
 
-interface ScoresProps {
-  scores: {
-    [Player.X]: number
-    [Player.O]: number
-  }
-}
-
-export const Scores: FC<ScoresProps> = ({ scores }) => {
+export const Scores = () => {
+  const { game } = useContext(GameContext)
+  const { scores } = game
   return <div className='Tateti-scores'>
     {
       Object.entries(scores).map(([player, score]) => <p key={player} children={score} />)

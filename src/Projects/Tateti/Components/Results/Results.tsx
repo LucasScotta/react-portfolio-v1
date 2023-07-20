@@ -1,12 +1,13 @@
-import { FC } from 'react'
-import { Player } from '../../constants'
-interface ResultsProps {
-  winner: Player | ''
-  draw: boolean
+import { useContext } from 'react'
+import { GameContext } from '../../Context/GameContext'
+
+export const Results = () => {
+  const { game } = useContext(GameContext)
+  const { winner, draw } = game
+  return (winner || draw) && <div
+    className='Tateti-Modal'>
+    {
+      draw ? 'Empate!!!!!!' : `Ganador ${winner}!!!!!!!!!`
+    }
+  </div> || <></>
 }
-export const Results: FC<ResultsProps> = ({ winner, draw }) => (winner || draw) && <div
-  className='Tateti-Modal'>
-  {
-    draw ? 'Empate!!!!!!' : `Ganador ${winner}!!!!!!!!!`
-  }
-</div> || <></>
