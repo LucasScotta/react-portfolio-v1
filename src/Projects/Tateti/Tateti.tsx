@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Board } from './Components'
+import { Board, Results, Turn } from './Components'
 import { Player } from './constants'
 import './style/main.css'
 type TBoard = (Player | '')[]
@@ -48,16 +48,15 @@ const Tateti = () => {
   const resetGame = () => {
     setBoard(emptyBoard)
     setTurn(Player.X)
+    if (winner) setWinner('')
+    if (draw) setDraw(false)
   }
   return <main className="Tateti-Project">
     <h1>Tateti App</h1>
     <button onClick={resetGame}>Restart</button>
     <Board board={board} updateCell={updateCell} />
-    <div className="Tateti-turn">
-      <p>{Player.X}</p>
-      <p>{Player.O}</p>
-    </div>
-
+    <Turn winner={winner} turn={turn} />
+    <Results winner={winner} draw={draw} />
   </main>
 }
 
