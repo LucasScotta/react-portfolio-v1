@@ -16,9 +16,13 @@ const Tateti = () => {
     setTurn(turn === Player.X ? Player.O : Player.X)
   }
 
+  const resetGame = () => {
+    setBoard(emptyBoard)
+    setTurn(Player.X)
+  }
   return <main className="Tateti-Project">
     <h1>Tateti App</h1>
-    <button>Restart</button>
+    <button onClick={resetGame}>Restart</button>
     <Board board={board} updateCell={updateCell} />
     <div className="Tateti-turn">
       <p>{Player.X}</p>
