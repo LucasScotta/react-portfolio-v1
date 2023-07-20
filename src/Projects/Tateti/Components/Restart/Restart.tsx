@@ -4,6 +4,6 @@ import { Button } from '../../../../Components'
 
 export const Restart = () => {
   const { resetGame } = useContext(GameContext)
-  return <Button onClick={resetGame}>Restart</Button>
+  return <Button onClick={resetGame} className='Tateti-button'>Restart</Button>
 
 }
