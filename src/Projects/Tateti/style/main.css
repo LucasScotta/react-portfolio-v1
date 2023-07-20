@@ -30,8 +30,10 @@
   justify-content: center;
   align-items: center;
   border: 1px solid blanchedalmond;
-  font-size: 80px;
+  font-size: 60px;
   font-weight: bold;
+  cursor: pointer;
+  user-select: none;
 }
 
 .Tateti-Project .Tateti-scores {
@@ -48,6 +50,7 @@
 .Tateti-Project .Tateti-turn p {
   margin: 0;
   padding: 0;
+  user-select: none;
 }
 
 .Tateti-Project .Tateti-scores p {
