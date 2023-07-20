@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { TodoContext } from '../../Context/TodoContext'
 import './style.css'
+import { Button } from '../../../../Components'
 
 export const TodoForm = () => {
   const { addTodo } = useContext(TodoContext)
@@ -12,6 +13,6 @@ export const TodoForm = () => {
     <textarea
       name='description'
       placeholder={'Desarrollar una App en React usando Custom Hooks y React-Router, o también, forkear este proyecto y customizarlo 🤜🤛.\nAbrí esta página en una nueva pestaña o ventana, agrega una tarea y volve a este navegador a ver la magia'} />
-    <button>Add</button>
+    <Button>Add</Button>
   </form>
 }

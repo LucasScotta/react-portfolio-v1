@@ -1,5 +1,6 @@
 import { FC, FormEvent } from 'react'
 import '../../styles/Contact-view.css'
+import { Button } from '../../../../Components'
 
 interface FormInputs {
   name: HTMLInputElement
@@ -31,6 +32,6 @@ export const Contact: FC<ContactProps> = ({ id, getText }) => {
     </div>
     <label htmlFor='home-contact-message'>{getText('contactFormMessageLabel')}</label>
     <textarea id='home-contact-message' name='message' required placeholder={getText('contactFormMessagePlaceHolder')} />
-    <button>{getText('contactFormSendButton')}</button>
+    <Button>{getText('contactFormSendButton')}</Button>
   </form>
 }
