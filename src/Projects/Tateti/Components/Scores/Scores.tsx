@@ -11,9 +11,7 @@ interface ScoresProps {
 export const Scores: FC<ScoresProps> = ({ scores }) => {
   return <div className='Tateti-scores'>
     {
-      Object.values(scores).map(score => {
-        return <p>{score}</p>
-      })
+      Object.entries(scores).map(([player, score]) => <p key={player} children={score} />)
     }
   </div>
 }
