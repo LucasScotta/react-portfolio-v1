@@ -1,5 +1,6 @@
 export * from './Board'
 export * from './Cell'
+export * from './ResetCount'
 export * from './Restart'
 export * from './Results'
 export * from './Scores'

@@ -1,4 +1,4 @@
-import { Board, Restart, Results, Scores, Turn } from './Components'
+import { Board, ResetCount, Restart, Results, Scores, Turn } from './Components'
 import { GameContextProvider } from './Context/GameContext'
 import './style/main.css'
 
@@ -11,6 +11,7 @@ const Tateti = () => {
       <Scores />
       <Turn />
       <Results />
+      <ResetCount />
     </main>
   </GameContextProvider>
 }
