@@ -11,8 +11,8 @@ export const Anchor: FC<AnchorProps> = ({ children, path, target }) => {
   const navigate = useNavigate()
   if (target) return <a href={path} target={target} children={children} />
   const anchorClick = (e: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) => {
-    if (e.button === 0) {
-      // Primary click, left as default
+    if (e.button === 0 && !e.ctrlKey && !e.shiftKey) {
+      // Primary click, left as default without ctrl and shift key pressed
       e.preventDefault()
       window.history.pushState(null, '', path)
       navigate(path, { replace: true })
