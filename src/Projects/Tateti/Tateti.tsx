@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Board, Results, Turn } from './Components'
+import { Board, Results, Scores, Turn } from './Components'
 import { Player } from './constants'
 import './style/main.css'
 type TBoard = (Player | '')[]
@@ -31,6 +31,7 @@ const Tateti = () => {
   const [turn, setTurn] = useState<Player>(Player.X)
   const [winner, setWinner] = useState<Player | ''>('')
   const [draw, setDraw] = useState(false)
+  const [scores, setScores] = useState({ [Player.X]: 0, [Player.O]: 0 })
   const updateCell = (index: number) => {
     if (board[index] || winner) return
     const dif = [...board]
@@ -55,6 +56,7 @@ const Tateti = () => {
     <h1>Tateti App</h1>
     <button onClick={resetGame}>Restart</button>
     <Board board={board} updateCell={updateCell} />
+    <Scores scores={scores} />
     <Turn winner={winner} draw={draw} turn={turn} />
     <Results winner={winner} draw={draw} />
   </main>

@@ -1,4 +1,5 @@
 export * from './Board'
 export * from './Cell'
 export * from './Results'
+export * from './Scores'
 export * from './Turn'

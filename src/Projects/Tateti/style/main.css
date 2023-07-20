@@ -29,9 +29,24 @@
   font-weight: bold;
 }
 
+.Tateti-Project .Tateti-scores {
+  font-size: 80px;
+  display: flex;
+}
+
 .Tateti-Project .Tateti-turn {
   display: flex;
   font-size: 80px;
+}
+
+.Tateti-Project .Tateti-scores p,
+.Tateti-Project .Tateti-turn p {
+  margin: 0;
+  padding: 0;
+}
+
+.Tateti-Project .Tateti-scores p {
+  margin: 0 20px;
 }
 
 .Tateti-Project .Tateti-turn .turn {
