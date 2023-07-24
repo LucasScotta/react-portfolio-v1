@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { GameConfig, Ball as BallModel } from './types'
+import { GameConfig } from './types'
 import { INIT_ARKANOID_GAME } from './constants'
 import './styles/main.css'
 import { Button } from '../../Components'
 import { Ball } from './Components'
-const createBall = (): BallModel => ({ x: 0, y: 0, angle: 1, height: 10, width: 10, id: 1, speed: 1 })
+import { createBall, isCollidingFloor, updateBall } from './utils'
 /** Arkanoid App Component */
 const Arkanoid = () => {
   const [game, setGame] = useState<GameConfig>({ ...INIT_ARKANOID_GAME })
@@ -20,9 +20,18 @@ const Arkanoid = () => {
     })
   }
 
-  const update = useCallback(() => {
-    () => ''
-  }, [])
+  /** Updates the game */
+  const update = useCallback(() => setGame(prev => {
+    const balls = []
+    for (const b of game.balls) {
+      // If the ball is coliding with the floor
+      if (isCollidingFloor(b, gameHeight)) continue
+      balls.push(ball)
+      // Updates the ball's position
+      const ball = updateBall({ ...b }, gameWidth)
+    }
+    return { ...prev, balls }
+  }), [game.balls, gameHeight, gameWidth])
 
   /** UseEffect to switch pause */
   useEffect(() => {
