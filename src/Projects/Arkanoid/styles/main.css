@@ -1,0 +1,13 @@
+.Arkanoid-Project * {
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.Arkanoid-Project {
+  display: flex;
+  flex-direction: column;
+}
+
+.Arkanoid-game-container {
+  position: relative;
+}
