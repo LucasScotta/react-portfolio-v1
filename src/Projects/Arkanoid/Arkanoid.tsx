@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { GameConfig } from './types'
 import { INIT_ARKANOID_GAME } from './constants'
 import './styles/main.css'
@@ -8,7 +8,22 @@ import { Ball } from './Components'
 /** Arkanoid App Component */
 const Arkanoid = () => {
   const [game, setGame] = useState<GameConfig>({ ...INIT_ARKANOID_GAME })
+  const intervalRef = useRef<number | void>()
   const { width: gameWidth, height: gameHeight } = game
+
+  const update = useCallback(() => {
+    () => ''
+  }, [])
+
+  /** UseEffect to switch pause */
+  useEffect(() => {
+    if (!game.start || game.pause) return
+    const interval = setInterval(update, game.timeInterval)
+    intervalRef.current = interval
+    return () => {
+      intervalRef.current = clearInterval(interval)
+    }
+  }, [game.start, game.pause, game.timeInterval, update])
 
   return (
     <main className='Arkanoid-Project'>
