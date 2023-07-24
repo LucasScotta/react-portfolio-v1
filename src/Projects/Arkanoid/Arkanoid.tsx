@@ -3,6 +3,7 @@ import { GameConfig } from './types'
 import { INIT_ARKANOID_GAME } from './constants'
 import './styles/main.css'
 import { Button } from '../../Components'
+import { Ball } from './Components'
 
 /** Arkanoid App Component */
 const Arkanoid = () => {
@@ -21,7 +22,12 @@ const Arkanoid = () => {
       </div>
       <div
         className='Arkanoid-game-container'
-        style={{ width: `${gameWidth}px`, height: `${gameHeight}px` }}>
+        style={{ width: `${gameWidth}px`, height: `${gameHeight}px` }}
+      >
+        {
+          /** in-game balls */
+          game.balls.map(ball => <Ball ball={ball} className='Arkanoid-ball' key={ball.id} />)
+        }
       </div>
     </main>
   )

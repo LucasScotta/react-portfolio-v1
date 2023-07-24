@@ -6,8 +6,16 @@
 .Arkanoid-Project {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .Arkanoid-game-container {
   position: relative;
+  border: 4px solid black;
+}
+
+.Arkanoid-game-container .Arkanoid-ball {
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
 }

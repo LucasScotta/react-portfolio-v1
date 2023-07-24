@@ -14,5 +14,6 @@ export const INIT_ARKANOID_GAME: GameConfig = {
   pause: false,
   width,
   height,
+  balls: [],
   timeInterval: 10,
 }
