@@ -26,11 +26,11 @@ const Arkanoid = () => {
   /** Wins the game */
   const win = useCallback(() => {
     const level = game.level + 1
-    if (level === 5) return setGame({ ...game, start: false, level: 1, pause: true })
+    if (level === 5) return setGame({ ...game, start: false, level: 1, pause: false })
     const ball = createBall()
     const balls = [ball]
     const blocks = generateLevel(level)
-    setGame({ ...game, level, blocks, balls })
+    setGame({ ...game, level, blocks, balls, pause: true })
   }, [game])
 
   /** Updates the game */
@@ -41,12 +41,13 @@ const Arkanoid = () => {
     setGame(prev => {
       const balls = []
       // Agregar IDS de los bloques que estan siendo golpeados
-      // const blockIds = new Set<number>()
       const blockIds = new Set<number>()
       for (const b of game.balls) {
         const ball = { ...b }
+
         // If the ball is coliding with the floor
         if (isColidingFloor(ball, gameHeight)) continue
+
         // if the ball is coliding with the paddle
         if (isColiding(ball, prev.paddle)) {
           // calculate the new angle
@@ -118,7 +119,6 @@ const Arkanoid = () => {
           game.blocks.map(block => <Block block={block} className='Arkanoid-block' key={block.id} />)
         }
         {/* in-game paddle */}
-        <div ></div>
         <Paddle className='Arkanoid-paddle' paddle={game.paddle} />
       </div>
     </main >
