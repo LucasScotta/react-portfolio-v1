@@ -30,10 +30,16 @@ const Arkanoid = () => {
     // const blockIds = new Set<number>()
     const blockIds = new Set<number>()
     for (const b of game.balls) {
-      // If the ball is coliding with the floor
-      if (isCollidingFloor(b, gameHeight)) continue
-      // Updates the ball's position
       const ball = { ...b }
+      // If the ball is coliding with the floor
+      if (isCollidingFloor(ball, gameHeight)) continue
+      if (isColliding(ball, prev.paddle, 1000)) {
+        const angle = calculateAngle(ball, prev.paddle, 1000)
+        ball.angle = angle
+        balls.push(updateBall(ball, gameWidth))
+        continue
+      }
+      // Updates the ball's position
       // Recorrer el arr de bloques y, si estan siendo golpeados por la bola en cuestion, agregar el ID al set.
       for (const block of prev.blocks) {
         if (isColliding(ball, block, 1000)) {
