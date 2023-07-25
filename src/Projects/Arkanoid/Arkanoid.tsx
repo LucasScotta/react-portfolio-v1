@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { GameConfig } from './types'
 import { INIT_ARKANOID_GAME } from './constants'
 import './styles/main.css'
 import { Button } from '../../Components'
-import { Ball, Block } from './Components'
-import { createBall, isCollidingFloor, updateBall } from './utils'
+import { Ball, Block, Paddle } from './Components'
+import { calculatePaddleCordinates, createBall, isCollidingFloor, updateBall } from './utils'
 import { generateLevel } from './utils/blocks/generate-level'
 /** Arkanoid App Component */
 const Arkanoid = () => {
@@ -35,6 +35,18 @@ const Arkanoid = () => {
     }
     return { ...prev, balls }
   }), [game.balls, gameHeight, gameWidth])
+
+  /**
+   * Updates the paddle's X coordinate
+   * @param {mouseEvent} e Mouse event with the clientX coordinate
+   */
+  const movePaddle = (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
+    if (game.start && !game.pause) {
+      const x = calculatePaddleCordinates(e.clientX, game.paddle.width, e.currentTarget.getBoundingClientRect())
+      setGame(prev => ({ ...prev, paddle: { ...game.paddle, x } }))
+    }
+  }
+
   const addBall = () => setGame(prev => ({ ...prev, balls: [...prev.balls, createBall()] }))
   /** UseEffect to switch pause */
   useEffect(() => {
@@ -60,6 +72,7 @@ const Arkanoid = () => {
       <div
         className='Arkanoid-game-container'
         style={{ width: `${gameWidth}px`, height: `${gameHeight}px` }}
+        onMouseMove={movePaddle}
       >
         {
           /** in-game balls */
@@ -69,6 +82,9 @@ const Arkanoid = () => {
           /** in-game blocks */
           game.blocks.map(block => <Block block={block} className='Arkanoid-block' key={block.id} />)
         }
+        {/* in-game paddle */}
+        <div ></div>
+        <Paddle className='Arkanoid-paddle' paddle={game.paddle} />
       </div>
     </main >
   )

@@ -8,6 +8,7 @@ export interface GameConfig {
   balls: Ball[]
   blocks: Block[]
   level: number
+  paddle: Paddle
 }
 
 /** Ball representation in-game */
@@ -29,4 +30,12 @@ export interface Block {
   width: number
   height: number
   color: string
+}
+
+/** Paddle representation in-game */
+export interface Paddle {
+  x: number
+  y: number
+  width: number
+  height: number
 }

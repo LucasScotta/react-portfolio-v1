@@ -23,3 +23,8 @@
 .Arkanoid-game-container .Arkanoid-block {
   position: absolute;
 }
+
+.Arkanoid-game-container .Arkanoid-paddle {
+  position: absolute;
+  background-color: red;
+}
