@@ -4,7 +4,7 @@ import { INIT_ARKANOID_GAME } from './constants'
 import './styles/main.css'
 import { Button } from '../../Components'
 import { Ball, Block, Paddle } from './Components'
-import { calculatePaddleCordinates, createBall, isCollidingFloor, updateBall } from './utils'
+import { calculateAngle, calculatePaddleCordinates, createBall, isColliding, isCollidingFloor, updateBall } from './utils'
 import { generateLevel } from './utils/blocks/generate-level'
 /** Arkanoid App Component */
 const Arkanoid = () => {
@@ -26,15 +26,28 @@ const Arkanoid = () => {
   /** Updates the game */
   const update = useCallback(() => setGame(prev => {
     const balls = []
+    // Agregar IDS de los bloques que estan siendo golpeados
+    // const blockIds = new Set<number>()
+    const blockIds = new Set<number>()
     for (const b of game.balls) {
       // If the ball is coliding with the floor
       if (isCollidingFloor(b, gameHeight)) continue
       // Updates the ball's position
-      const ball = updateBall({ ...b }, gameWidth)
-      balls.push(ball)
+      const ball = { ...b }
+      // Recorrer el arr de bloques y, si estan siendo golpeados por la bola en cuestion, agregar el ID al set.
+      for (const block of prev.blocks) {
+        if (isColliding(ball, block, 1000)) {
+          blockIds.add(block.id)
+          const angle = calculateAngle(ball, block, 1000)
+          ball.angle = angle
+        }
+      }
+      balls.push(updateBall(ball, gameWidth))
     }
-    return { ...prev, balls }
-  }), [game.balls, gameHeight, gameWidth])
+    const blocks = prev.blocks.filter(block => !blockIds.has(block.id))
+    // Filtrar los bloques que NO esten incluidos en el SET
+    return { ...prev, balls, blocks }
+  }), [game, gameHeight, gameWidth])
 
   /**
    * Updates the paddle's X coordinate

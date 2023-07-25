@@ -14,17 +14,15 @@
   border: 4px solid black;
 }
 
+.Arkanoid-game-container * {
+  position: absolute;
+}
+
 .Arkanoid-game-container .Arkanoid-ball {
   background-color: white;
   border-radius: 50%;
-  position: absolute;
-}
-
-.Arkanoid-game-container .Arkanoid-block {
-  position: absolute;
 }
 
 .Arkanoid-game-container .Arkanoid-paddle {
-  position: absolute;
   background-color: red;
 }

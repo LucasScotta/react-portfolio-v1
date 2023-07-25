@@ -12,6 +12,8 @@ export const GAME_MEASUREMENTS = {
   paddleHeight: 25
 }
 
+export const scaleFactor = 1000
+
 const { gameWidth, gameHeight, paddleWidth, paddleHeight } = GAME_MEASUREMENTS
 
 /** Arkanoid Initial Config */
