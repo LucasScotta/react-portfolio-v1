@@ -1,3 +1,3 @@
 export * from './createBall'
-export * from './isColliding'
+export * from './isColiding'
 export * from './updateBall'

@@ -1,3 +1,4 @@
+import { scaleFactor } from '../../constants'
 import { Ball, Block, Paddle } from '../../types'
 
 /**
@@ -6,16 +7,15 @@ import { Ball, Block, Paddle } from '../../types'
  * @param {number} height The height of the game's container
  * @returns {boolean}
  */
-export const isCollidingFloor = (ball: Ball, height: number) => ball.y + ball.height * 2 >= height
+export const isColidingFloor = (ball: Ball, height: number) => ball.y + ball.height * 2 >= height
 
 
 /**
  * Scales the entity proportions to calculate the hitbox
  * @param entity 
- * @param scaleFactor 
  * @returns 
  */
-const scale = (entity: Ball | Block | Paddle, scaleFactor: number) => ({
+const scale = (entity: Ball | Block | Paddle) => ({
   left: Math.round(entity.x * scaleFactor),
   top: Math.round(entity.y * scaleFactor),
   width: Math.round(entity.width * scaleFactor),
@@ -26,12 +26,11 @@ const scale = (entity: Ball | Block | Paddle, scaleFactor: number) => ({
  * Return if the entities are colisioning
  * @param {Ball} ball in-game ball's representation
  * @param {Block | Paddle} entity in-game entity's representation
- * @param {number} scaleFactor The factor number to scale the proportions
  * @returns {boolean}
  */
-export const isColliding = (ball: Ball, entity: Block | Paddle, scaleFactor: number) => {
-  const scaledBall = scale(ball, scaleFactor)
-  const scaledEntity = scale(entity, scaleFactor)
+export const isColiding = (ball: Ball, entity: Block | Paddle) => {
+  const scaledBall = scale(ball)
+  const scaledEntity = scale(entity)
 
   // Calcular los límites de la bola y el bloque con las coordenadas escaladas
   const ballTop = scaledBall.top
@@ -52,9 +51,9 @@ export const isColliding = (ball: Ball, entity: Block | Paddle, scaleFactor: num
   )
 }
 
-export const calculateAngle = (ball: Ball, entity: Block | Paddle, scaleFactor: number) => {
-  const scaledBall = scale(ball, scaleFactor)
-  const scaledEntity = scale(entity, scaleFactor)
+export const calculateAngle = (ball: Ball, entity: Block | Paddle) => {
+  const scaledBall = scale(ball)
+  const scaledEntity = scale(entity)
 
   // Calcular los límites de la bola y el bloque con las coordenadas escaladas
   const ballTop = scaledBall.top
@@ -70,15 +69,15 @@ export const calculateAngle = (ball: Ball, entity: Block | Paddle, scaleFactor: 
   const intersectionY = Math.max(ballTop, Math.min(ballBottom, entityBottom)) - Math.min(ballTop, Math.max(ballBottom, entityTop))
 
   // Determinar el lado de colisión (izquierda, derecha, arriba o abajo)
-  const collisionDirection = intersectionX < intersectionY
+  const colisionDirection = intersectionX < intersectionY
     ? intersectionX === ballLeft - entityRight ? 'left' : 'right'
     : intersectionY === ballTop - entityBottom ? 'top' : 'bottom'
 
   // Calcular el ángulo de rebote según la dirección de colisión
   let newAngle = ball.angle
-  if (collisionDirection === 'left' || collisionDirection === 'right') {
+  if (colisionDirection === 'left' || colisionDirection === 'right') {
     newAngle = Math.PI - ball.angle
-  } else if (collisionDirection === 'top' || collisionDirection === 'bottom') {
+  } else if (colisionDirection === 'top' || colisionDirection === 'bottom') {
     newAngle = -ball.angle
   }
 
