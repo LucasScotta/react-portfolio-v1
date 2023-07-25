@@ -19,3 +19,7 @@
   border-radius: 50%;
   position: absolute;
 }
+
+.Arkanoid-game-container .Arkanoid-block {
+  position: absolute;
+}

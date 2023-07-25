@@ -3,7 +3,11 @@ import type { GameConfig } from './types'
 /** Arkanoid Container Game Measurements */
 export const GAME_MEASUREMENTS = {
   width: 600,
-  height: 700
+  height: 700,
+  blockWidth: 60,
+  blockHeight: 25,
+  blocksSeparatorX: 10,
+  blocksSeparatorY: 50,
 }
 
 const { width, height } = GAME_MEASUREMENTS
@@ -14,6 +18,8 @@ export const INIT_ARKANOID_GAME: GameConfig = {
   pause: false,
   width,
   height,
+  level: 1,
   balls: [],
-  timeInterval: 10,
+  blocks: [],
+  timeInterval: 10
 }

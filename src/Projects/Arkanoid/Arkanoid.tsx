@@ -3,8 +3,9 @@ import { GameConfig } from './types'
 import { INIT_ARKANOID_GAME } from './constants'
 import './styles/main.css'
 import { Button } from '../../Components'
-import { Ball } from './Components'
+import { Ball, Block } from './Components'
 import { createBall, isCollidingFloor, updateBall } from './utils'
+import { generateLevel } from './utils/blocks/generate-level'
 /** Arkanoid App Component */
 const Arkanoid = () => {
   const [game, setGame] = useState<GameConfig>({ ...INIT_ARKANOID_GAME })
@@ -16,7 +17,9 @@ const Arkanoid = () => {
     const { start } = game
     if (start) return
     setGame(prev => {
-      return { ...prev, start: !start, balls: [createBall()] }
+      /** Level blocks representation */
+      const blocks = generateLevel(game.level)
+      return { ...prev, start: !start, balls: [createBall()], blocks }
     })
   }
 
@@ -26,13 +29,13 @@ const Arkanoid = () => {
     for (const b of game.balls) {
       // If the ball is coliding with the floor
       if (isCollidingFloor(b, gameHeight)) continue
-      balls.push(ball)
       // Updates the ball's position
       const ball = updateBall({ ...b }, gameWidth)
+      balls.push(ball)
     }
     return { ...prev, balls }
   }), [game.balls, gameHeight, gameWidth])
-
+  const addBall = () => setGame(prev => ({ ...prev, balls: [...prev.balls, createBall()] }))
   /** UseEffect to switch pause */
   useEffect(() => {
     if (!game.start || game.pause) return
@@ -52,6 +55,7 @@ const Arkanoid = () => {
             ? <Button onClick={startGame}>START</Button>
             : <Button onClick={() => setGame({ ...game, pause: !game.pause })}>{game.pause ? 'UNPAUSE' : 'PAUSE'}</Button>
         }
+        {game.start && <Button onClick={addBall}>ADD BALL</Button>}
       </div>
       <div
         className='Arkanoid-game-container'
@@ -60,6 +64,10 @@ const Arkanoid = () => {
         {
           /** in-game balls */
           game.balls.map(ball => <Ball ball={ball} className='Arkanoid-ball' key={ball.id} />)
+        }
+        {
+          /** in-game blocks */
+          game.blocks.map(block => <Block block={block} className='Arkanoid-block' key={block.id} />)
         }
       </div>
     </main >

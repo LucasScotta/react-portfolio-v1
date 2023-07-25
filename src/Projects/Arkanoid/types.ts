@@ -6,6 +6,8 @@ export interface GameConfig {
   height: number
   timeInterval: number
   balls: Ball[]
+  blocks: Block[]
+  level: number
 }
 
 /** Ball representation in-game */
@@ -17,4 +19,14 @@ export interface Ball {
   height: number
   speed: number
   angle: number
+}
+
+/** Block representation in-game */
+export interface Block {
+  id: number
+  x: number
+  y: number
+  width: number
+  height: number
+  color: string
 }
