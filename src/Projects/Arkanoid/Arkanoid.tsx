@@ -1,6 +1,6 @@
 import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
-import { GameConfig } from './types'
-import { INIT_ARKANOID_GAME } from './constants'
+import { GameConfig, Paddle as IPaddle, Ball as IBall, Block as IBlock } from './types'
+import { INIT_ARKANOID_GAME, INIT_ARKANOID_PADDLE } from './constants'
 import './styles/main.css'
 import { Button } from '../../Components'
 import { Ball, Block, Paddle } from './Components'
@@ -8,6 +8,9 @@ import { calculateAngle, calculatePaddleCordinates, createBall, isColiding, isCo
 import { generateLevel } from './utils/blocks/generate-level'
 /** Arkanoid App Component */
 const Arkanoid = () => {
+  const paddleRef = useRef<IPaddle>({ ...INIT_ARKANOID_PADDLE })
+  const ballsRef = useRef<Array<IBall>>([])
+  const blocksRef = useRef<Array<IBlock>>([])
   const [game, setGame] = useState<GameConfig>({ ...INIT_ARKANOID_GAME })
   const intervalRef = useRef<number | void>()
   const { width: gameWidth, height: gameHeight } = game
@@ -18,8 +21,9 @@ const Arkanoid = () => {
     if (start) return
     setGame(prev => {
       /** Level blocks representation */
-      const blocks = generateLevel(game.level)
-      return { ...prev, start: !start, balls: [createBall()], blocks }
+      blocksRef.current = generateLevel(game.level)
+      ballsRef.current = [createBall()]
+      return { ...prev, start: !start }
     })
   }
 
@@ -28,35 +32,35 @@ const Arkanoid = () => {
     const level = game.level + 1
     if (level === 5) return setGame({ ...game, start: false, level: 1, pause: false })
     const ball = createBall()
-    const balls = [ball]
-    const blocks = generateLevel(level)
-    setGame({ ...game, level, blocks, balls, pause: true })
+    ballsRef.current = [ball]
+    blocksRef.current = generateLevel(level)
+    setGame({ ...game, level, pause: true })
   }, [game])
 
   /** Updates the game */
   const update = useCallback(() => {
-    if (!game.blocks.length) {
+    if (!blocksRef.current.length) {
       return win()
     }
     setGame(prev => {
       const balls = []
       // Agregar IDS de los bloques que estan siendo golpeados
       const blockIds = new Set<number>()
-      for (const b of game.balls) {
+      for (const b of ballsRef.current) {
         const ball = { ...b }
 
         // If the ball is coliding with the floor
         if (isColidingFloor(ball, gameHeight)) continue
 
         // if the ball is coliding with the paddle
-        if (isColiding(ball, prev.paddle)) {
+        if (isColiding(ball, paddleRef.current)) {
           // calculate the new angle
-          const angle = calculateAngle(ball, prev.paddle)
+          const angle = calculateAngle(ball, paddleRef.current)
           ball.angle = angle
           balls.push(updateBall(ball, gameWidth))
           continue
         }
-        for (const block of prev.blocks) {
+        for (const block of blocksRef.current) {
           // if the ball is coliding block
           if (isColiding(ball, block)) {
             blockIds.add(block.id)
@@ -67,10 +71,11 @@ const Arkanoid = () => {
         balls.push(updateBall(ball, gameWidth))
       }
       // filter blocks NOT included in the hitted blocks set
-      const blocks = prev.blocks.filter(block => !blockIds.has(block.id))
-      return { ...prev, balls, blocks }
+      blocksRef.current = blocksRef.current.filter(block => !blockIds.has(block.id))
+      ballsRef.current = balls
+      return { ...prev }
     })
-  }, [game, gameHeight, gameWidth, win])
+  }, [gameHeight, gameWidth, win])
 
   /**
    * Updates the paddle's X coordinate
@@ -78,12 +83,16 @@ const Arkanoid = () => {
    */
   const movePaddle = (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
     if (game.start && !game.pause) {
-      const x = calculatePaddleCordinates(e.clientX, game.paddle.width, e.currentTarget.getBoundingClientRect())
-      setGame(prev => ({ ...prev, paddle: { ...game.paddle, x } }))
+      const { current } = paddleRef
+      const x = calculatePaddleCordinates(e.clientX, current.width, e.currentTarget.getBoundingClientRect())
+      paddleRef.current.x = x
     }
   }
 
-  const addBall = () => setGame(prev => ({ ...prev, balls: [...prev.balls, createBall()] }))
+  const addBall = () => {
+    const { current } = ballsRef
+    ballsRef.current = [...current, createBall()]
+  }
   /** UseEffect to switch pause */
   useEffect(() => {
     if (!game.start || game.pause) return
@@ -112,14 +121,14 @@ const Arkanoid = () => {
       >
         {
           /** in-game balls */
-          game.balls.map(ball => <Ball ball={ball} className='Arkanoid-ball' key={ball.id} />)
+          ballsRef.current.map(ball => <Ball ball={ball} className='Arkanoid-ball' key={ball.id} />)
         }
         {
           /** in-game blocks */
-          game.blocks.map(block => <Block block={block} className='Arkanoid-block' key={block.id} />)
+          blocksRef.current.map(block => <Block block={block} className='Arkanoid-block' key={block.id} />)
         }
         {/* in-game paddle */}
-        <Paddle className='Arkanoid-paddle' paddle={game.paddle} />
+        <Paddle className='Arkanoid-paddle' paddle={paddleRef.current} />
       </div>
     </main >
   )

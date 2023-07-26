@@ -1,4 +1,4 @@
-import type { GameConfig } from './types'
+import type { GameConfig, Paddle } from './types'
 
 /** Arkanoid Container Game Measurements */
 export const GAME_MEASUREMENTS = {
@@ -26,10 +26,11 @@ export const INIT_ARKANOID_GAME: GameConfig = {
   balls: [],
   blocks: [],
   timeInterval: 10,
-  paddle: {
-    x: gameWidth / 2 - paddleWidth / 2,
-    y: gameHeight - paddleHeight * 2,
-    width: 100,
-    height: 25
-  }
+}
+
+export const INIT_ARKANOID_PADDLE: Paddle = {
+  x: gameWidth / 2 - paddleWidth / 2,
+  y: gameHeight - paddleHeight * 2,
+  width: paddleWidth,
+  height: paddleHeight
 }

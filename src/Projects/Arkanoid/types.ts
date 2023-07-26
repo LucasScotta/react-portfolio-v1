@@ -5,10 +5,7 @@ export interface GameConfig {
   width: number
   height: number
   timeInterval: number
-  balls: Ball[]
-  blocks: Block[]
   level: number
-  paddle: Paddle
 }
 
 /** Ball representation in-game */
