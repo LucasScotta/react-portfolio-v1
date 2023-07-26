@@ -23,8 +23,6 @@ export const INIT_ARKANOID_GAME: GameConfig = {
   width: gameWidth,
   height: gameHeight,
   level: 1,
-  balls: [],
-  blocks: [],
   timeInterval: 10,
 }
 
