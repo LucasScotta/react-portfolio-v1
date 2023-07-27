@@ -6,6 +6,7 @@ import { Button } from '../../Components'
 import { Ball, Block, Paddle } from './Components'
 import { calculateAngle, calculatePaddleCordinates, createBall, isColiding, isColidingFloor, updateBall } from './utils'
 import { generateLevel } from './utils/blocks/generate-level'
+
 /** Arkanoid App Component */
 const Arkanoid = () => {
   const paddleRef = useRef<IPaddle>({ ...INIT_ARKANOID_PADDLE })
@@ -40,13 +41,15 @@ const Arkanoid = () => {
 
   /** Wins the game */
   const win = useCallback(() => {
-    const level = game.level + 1
-    if (level === 5) return setGame({ ...game, start: false, level: 1, pause: false })
-    const ball = createBall()
-    ballsRef.current = [ball]
-    blocksRef.current = generateLevel(level)
-    setGame({ ...game, level, pause: true })
-  }, [game])
+    setGame(prev => {
+      const level = prev.level + 1
+      if (level === 5) return { ...prev, start: false, level: 1, pause: false }
+      const ball = createBall()
+      ballsRef.current = [ball]
+      blocksRef.current = generateLevel(level)
+      return { ...prev, level, pause: true }
+    })
+  }, [])
 
   /** Updates the game */
   const update = useCallback(() => {
