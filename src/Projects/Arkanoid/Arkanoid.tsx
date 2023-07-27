@@ -27,6 +27,17 @@ const Arkanoid = () => {
     })
   }
 
+  /** Loses the game */
+  const loss = useCallback(() => {
+    setGame(prev => {
+      const lives = prev.lives - 1
+      if (lives === 0) return { ...prev, start: false, level: 1, pause: false, lives: 3 }
+      const ball = createBall()
+      ballsRef.current = [ball]
+      return { ...prev, pause: true, lives }
+    })
+  }, [])
+
   /** Wins the game */
   const win = useCallback(() => {
     const level = game.level + 1
@@ -39,9 +50,16 @@ const Arkanoid = () => {
 
   /** Updates the game */
   const update = useCallback(() => {
+    // If no blocks
     if (!blocksRef.current.length) {
       return win()
     }
+
+    // If no balls
+    if (!ballsRef.current.length) {
+      return loss()
+    }
+
     setGame(prev => {
       const balls = []
       // Agregar IDS de los bloques que estan siendo golpeados
@@ -75,7 +93,7 @@ const Arkanoid = () => {
       ballsRef.current = balls
       return { ...prev }
     })
-  }, [gameHeight, gameWidth, win])
+  }, [gameHeight, gameWidth, win, loss])
 
   /**
    * Updates the paddle's X coordinate
@@ -106,6 +124,7 @@ const Arkanoid = () => {
   return (
     <main className='Arkanoid-Project'>
       <h1>Arkanoid App LEVEL: {game.level}</h1>
+      <h2>Lives: {game.lives}</h2>
       <div className='Arkanoid-handler'>
         {
           !game.start

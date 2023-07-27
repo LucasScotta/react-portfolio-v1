@@ -10,6 +10,7 @@
 }
 
 .Arkanoid-game-container {
+  user-select: none;
   position: relative;
   border: 4px solid black;
 }

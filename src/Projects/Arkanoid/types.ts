@@ -6,6 +6,7 @@ export interface GameConfig {
   height: number
   timeInterval: number
   level: number
+  lives: number
 }
 
 /** Ball representation in-game */
