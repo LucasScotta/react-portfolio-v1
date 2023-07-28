@@ -64,21 +64,26 @@ const Arkanoid = () => {
     }
 
     setGame(prev => {
-      const balls = []
       // Agregar IDS de los bloques que estan siendo golpeados
       const blockIds = new Set<number>()
-      for (const b of ballsRef.current) {
-        const ball = { ...b }
+      const ballIds = new Set<number>()
+      for (const ball of ballsRef.current) {
 
         // If the ball is coliding with the floor
-        if (isColidingFloor(ball, gameHeight)) continue
+        if (isColidingFloor(ball, gameHeight)) {
+          ballIds.add(ball.id)
+          continue
+        }
 
         // if the ball is coliding with the paddle
         if (isColiding(ball, paddleRef.current)) {
           // calculate the new angle
           const angle = calculateAngle(ball, paddleRef.current)
           ball.angle = angle
-          balls.push(updateBall(ball, gameWidth))
+          const { x, y, angle: newAngle } = updateBall(ball, gameWidth)
+          ball.x = x
+          ball.y = y
+          ball.angle = newAngle
           continue
         }
         for (const block of blocksRef.current) {
@@ -89,11 +94,14 @@ const Arkanoid = () => {
             ball.angle = angle
           }
         }
-        balls.push(updateBall(ball, gameWidth))
+        const { x, y, angle } = updateBall(ball, gameWidth)
+        ball.x = x
+        ball.y = y
+        ball.angle = angle
       }
       // filter blocks NOT included in the hitted blocks set
       blocksRef.current = blocksRef.current.filter(block => !blockIds.has(block.id))
-      ballsRef.current = balls
+      ballsRef.current = ballsRef.current.filter(ball => !ballIds.has(ball.id))
       return { ...prev }
     })
   }, [gameHeight, gameWidth, win, loss])
