@@ -1,2 +1,2 @@
-export * from './balls'
 export * from './paddle'
+export * from './scale'
