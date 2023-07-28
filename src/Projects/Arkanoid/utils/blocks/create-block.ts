@@ -1,6 +1,6 @@
 import { GAME_MEASUREMENTS } from '../../constants'
 import { Block } from '../../types'
-import { idGenerator } from '../id-generator'
+import { generateId } from '../../proto'
 
 const { blockWidth, blockHeight } = GAME_MEASUREMENTS
 
@@ -14,7 +14,7 @@ const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)]
  * @returns 
  */
 export const createBlock = (x: number, y: number): Block => ({
-  id: idGenerator(),
+  id: generateId(),
   x,
   y,
   width: blockWidth,

@@ -1,6 +1,6 @@
 import { Block, Ball as IBall, Paddle } from '../../types'
 import { scale } from '../../utils'
-import { idGenerator } from '../../utils/id-generator'
+import { generateId } from '../utils/'
 
 interface GameConfig {
   width: number
@@ -25,7 +25,7 @@ export class Ball implements IBall {
    * @param {Paddle} paddle The paddle object used for collision detection
    */
   constructor(public x: number, public y: number, public speed: number, private gameConfig: GameConfig, private paddle: Paddle) {
-    this.id = idGenerator()
+    this.id = generateId()
   }
 
   /**
