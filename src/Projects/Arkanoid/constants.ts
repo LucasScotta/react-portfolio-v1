@@ -29,7 +29,8 @@ export const INIT_ARKANOID_GAME: GameConfig = {
   cheats: false,
   difficult: Difficult.easy,
   points: 0,
-  multiplier: 1
+  multiplier: 1,
+  baseSpeed: 5
 }
 
 /** Paddle initial config */

@@ -11,6 +11,7 @@ export interface GameConfig {
   difficult: Difficult
   points: number
   multiplier: number
+  baseSpeed: number
 }
 
 export interface Entity {

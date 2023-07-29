@@ -8,5 +8,6 @@ export const projectsPath = {
 
 export const localStorageKeys = {
   todo: 'todos',
+  arkanoid: 'arkanoid_points'
 }
 export const githubLink = 'https://github.com/LucasScotta/react-portfolio'
