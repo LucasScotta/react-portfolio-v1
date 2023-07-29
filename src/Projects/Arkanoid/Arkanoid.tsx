@@ -4,26 +4,29 @@ import { INIT_ARKANOID_GAME, INIT_ARKANOID_PADDLE } from './constants'
 import { Button } from '../../Components'
 import { Ball, Block, Paddle } from './Components'
 import { calculatePaddleCordinates, generateLevel } from './utils'
-import { Ball as BallClass, Block as BlockClass, createBall } from './proto'
+import { Ball as BallClass, Block as BlockClass, createBall, createManager } from './proto'
 import './styles/main.css'
 
 /** Arkanoid App Component */
 const Arkanoid = () => {
   const paddleRef = useRef<IPaddle>({ ...INIT_ARKANOID_PADDLE })
-  const ballsRef = useRef<Array<BallClass>>([])
-  const blocksRef = useRef<Array<BlockClass>>([])
+  const ballsRef = useRef(createManager<BallClass>())
+  const blocksRef = useRef(createManager<BlockClass>())
   const [game, setGame] = useState<GameConfig>({ ...INIT_ARKANOID_GAME })
   const intervalRef = useRef<number | void>()
   const { width: gameWidth, height: gameHeight } = game
 
   /** Starts the game if it's not started yes */
   const startGame = () => {
+    const blocks = blocksRef.current
+    const balls = ballsRef.current
     const { start } = game
     if (start) return
     setGame(prev => {
       /** Level blocks representation */
-      blocksRef.current = generateLevel(game.level)
-      ballsRef.current = [createBall(paddleRef.current.x + paddleRef.current.width / 2, paddleRef.current.y - 11, 5, { height: game.height, width: game.width }, paddleRef.current)]
+      blocks.setItems(generateLevel(game.level))
+      balls.resetItems()
+      addBall()
       return { ...prev, start: !start }
     })
   }
@@ -33,8 +36,10 @@ const Arkanoid = () => {
     setGame(prev => {
       const lives = prev.lives - 1
       if (lives === 0) return { ...prev, start: false, level: 1, pause: false, lives: 3 }
-      const ball = createBall(paddleRef.current.x + paddleRef.current.width / 2, paddleRef.current.y - 11, 5, { height: game.height, width: game.width }, paddleRef.current)
-      ballsRef.current = [ball]
+      const ball = createBall(paddleRef.current.x + paddleRef.current.width / 2, paddleRef.current.y - 11, 3, { height: game.height, width: game.width }, paddleRef.current)
+      const balls = ballsRef.current
+      balls.resetItems()
+      balls.addItem(ball)
       return { ...prev, pause: true, lives }
     })
   }, [game.height, game.width])
@@ -44,31 +49,34 @@ const Arkanoid = () => {
     setGame(prev => {
       const level = prev.level + 1
       if (level === 5) return { ...prev, start: false, level: 1, pause: false }
-      const ball = createBall(Math.floor(Math.random() * 300) + 15, Math.floor(Math.random() * 300) + 15, 5, { height: game.height, width: game.width }, paddleRef.current)
-      ballsRef.current = [ball]
-      blocksRef.current = generateLevel(level)
+      const ball = createBall(Math.floor(Math.random() * 300) + 15, Math.floor(Math.random() * 300) + 15, 3, { height: game.height, width: game.width }, paddleRef.current)
+      const blocks = blocksRef.current
+      const balls = ballsRef.current
+      balls.setItems([ball])
+      blocks.setItems(generateLevel(level))
       return { ...prev, level, pause: true }
     })
   }, [game.width, game.height])
 
   /** Updates the game */
   const update = useCallback(() => {
+    const blocks = blocksRef.current
+    const balls = ballsRef.current
+
     // If no blocks
-    if (!blocksRef.current.length) {
+    if (!blocks.getItems().length) {
       return win()
     }
 
     // If no balls
-    if (!ballsRef.current.length) {
+    if (!balls.getItems().length) {
       return loss()
     }
 
     setGame(prev => {
-      // Agregar IDS de los bloques que estan siendo golpeados
+      for (const ball of balls.getItems()) {
 
-      for (const ball of ballsRef.current) {
-
-        for (const block of blocksRef.current) {
+        for (const block of blocks.getItems()) {
           // if the ball is coliding block
           if (ball.isColiding(block)) {
             block.hit()
@@ -76,11 +84,12 @@ const Arkanoid = () => {
             ball.angle = angle
           }
         }
+        // updates ball's coordinates
         ball.update()
       }
-      // filter blocks NOT included in the hitted blocks set
-      blocksRef.current = blocksRef.current.filter(block => !block.destroyed)
-      ballsRef.current = ballsRef.current.filter(ball => !ball.destroyed)
+      // filter destroyed items
+      blocksRef.current.removeDestroyed()
+      ballsRef.current.removeDestroyed()
       return { ...prev }
     })
   }, [win, loss])
@@ -98,8 +107,8 @@ const Arkanoid = () => {
   }
 
   const addBall = () => {
-    const { current } = ballsRef
-    ballsRef.current = [...current, createBall(Math.floor(Math.random() * 300) + 15, Math.floor(Math.random() * 300) + 15, 2.5, { height: game.height, width: game.width }, paddleRef.current)]
+    const ball = createBall(Math.floor(Math.random() * 300) + 15, Math.floor(Math.random() * 300) + 15, 3, { height: game.height, width: game.width }, paddleRef.current)
+    ballsRef.current.addItem(ball)
   }
   /** UseEffect to switch pause */
   useEffect(() => {
@@ -130,11 +139,11 @@ const Arkanoid = () => {
       >
         {
           /** in-game balls */
-          ballsRef.current.map(ball => <Ball ball={ball} className='Arkanoid-ball' key={ball.id} />)
+          ballsRef.current.getItems().map(ball => <Ball ball={ball} className='Arkanoid-ball' key={ball.id} />)
         }
         {
           /** in-game blocks */
-          blocksRef.current.map(block => <Block block={block} className='Arkanoid-block' key={block.id} />)
+          blocksRef.current.getItems().map(block => <Block block={block} className='Arkanoid-block' key={block.id} />)
         }
         {/* in-game paddle */}
         <Paddle className='Arkanoid-paddle' paddle={paddleRef.current} />

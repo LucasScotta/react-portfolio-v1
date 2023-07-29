@@ -15,6 +15,7 @@ export interface Entity {
   y: number
   width: number
   height: number
+  destroyed: boolean
 }
 
 /** Ball representation in-game */
