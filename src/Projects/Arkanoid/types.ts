@@ -25,6 +25,7 @@ export interface Ball extends Entity {
 
 /** Block representation in-game */
 export interface Block extends Entity {
+  lives: number
   color: string
 }
 

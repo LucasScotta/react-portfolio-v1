@@ -1,18 +1,17 @@
 import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
-import { GameConfig, Paddle as IPaddle, Block as IBlock } from './types'
+import { Paddle as IPaddle, GameConfig } from './types'
 import { INIT_ARKANOID_GAME, INIT_ARKANOID_PADDLE } from './constants'
 import { Button } from '../../Components'
 import { Ball, Block, Paddle } from './Components'
-import { calculatePaddleCordinates } from './utils'
-import { generateLevel } from './utils/blocks/generate-level'
-import { Ball as BallClass, createBall } from './proto'
+import { calculatePaddleCordinates, generateLevel } from './utils'
+import { Ball as BallClass, Block as BlockClass, createBall } from './proto'
 import './styles/main.css'
 
 /** Arkanoid App Component */
 const Arkanoid = () => {
   const paddleRef = useRef<IPaddle>({ ...INIT_ARKANOID_PADDLE })
   const ballsRef = useRef<Array<BallClass>>([])
-  const blocksRef = useRef<Array<IBlock>>([])
+  const blocksRef = useRef<Array<BlockClass>>([])
   const [game, setGame] = useState<GameConfig>({ ...INIT_ARKANOID_GAME })
   const intervalRef = useRef<number | void>()
   const { width: gameWidth, height: gameHeight } = game
@@ -66,14 +65,13 @@ const Arkanoid = () => {
 
     setGame(prev => {
       // Agregar IDS de los bloques que estan siendo golpeados
-      const blockIds = new Set<number>()
 
       for (const ball of ballsRef.current) {
 
         for (const block of blocksRef.current) {
           // if the ball is coliding block
           if (ball.isColiding(block)) {
-            blockIds.add(block.id)
+            block.hit()
             const angle = ball.calculateAngle(block)
             ball.angle = angle
           }
@@ -81,7 +79,7 @@ const Arkanoid = () => {
         ball.update()
       }
       // filter blocks NOT included in the hitted blocks set
-      blocksRef.current = blocksRef.current.filter(block => !blockIds.has(block.id))
+      blocksRef.current = blocksRef.current.filter(block => !block.destroyed)
       ballsRef.current = ballsRef.current.filter(ball => !ball.destroyed)
       return { ...prev }
     })
