@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useCallback, MouseEvent } from 'react'
+import { useRef, useState, useEffect, useCallback, MouseEvent, TouchEvent } from 'react'
 import { GameConfig, GameUserOptions, Paddle as IPaddle } from '../types'
 import { INIT_ARKANOID_PADDLE } from '../constants'
 import { Ball as BallClass, Block as BlockClass, createBall, createManager } from '../proto'
@@ -163,11 +163,24 @@ export const PlayArkanoidGame = ({ gameOptions }: Props) => {
     }
   }, [game.start, game.pause, game.timeInterval, update])
 
+  /**
+  * Updates the paddle's X coordinate in mobile
+  * @param {TouchEvent} e Touch event with the clientX coordinate
+  */
+  const moveMobilePaddle = (e: TouchEvent<HTMLDivElement>) => {
+    if (!game.pause) {
+      const { current } = paddleRef
+      const x = calculatePaddleCordinates(e.touches[0].clientX, current.width, e.currentTarget.getBoundingClientRect())
+      paddleRef.current.x = x
+      setGame(prev => ({ ...prev }))
+    }
+  }
 
   return <div
     className='Arkanoid-game-container'
     style={{ width: `${gameWidth}px`, height: `${gameHeight}px` }}
     onMouseMove={movePaddle}
+    onTouchMove={moveMobilePaddle}
     onClick={moveBalls}
   >
     {
