@@ -24,7 +24,8 @@ export const INIT_ARKANOID_GAME: GameConfig = {
   height: gameHeight,
   level: 1,
   timeInterval: 10,
-  lives: 3
+  lives: 3,
+  cheats: false
 }
 
 export const INIT_ARKANOID_PADDLE: Paddle = {

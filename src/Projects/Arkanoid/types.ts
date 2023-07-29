@@ -7,6 +7,8 @@ export interface GameConfig {
   timeInterval: number
   level: number
   lives: number
+  cheats: boolean
+  difficult: Difficult
 }
 
 export interface Entity {
@@ -36,4 +38,25 @@ export interface Paddle {
   y: number
   width: number
   height: number
+}
+
+
+/** Game difficult options enum */
+export enum Difficult {
+  easy = 'easy',
+  medium = 'medium',
+  hard = 'hard',
+  insane = 'insane'
+}
+
+/** Game cheats options enum */
+export enum Cheats {
+  on = 'ON',
+  off = 'OFF'
+}
+
+/** Game options interface */
+export interface GameUserOptions {
+  cheats: Cheats
+  difficult: Difficult
 }
