@@ -1,13 +1,16 @@
 import { GAME_MEASUREMENTS } from '../constants'
 import { createBlock } from '../proto'
+import { Difficult } from '../types'
 import { levels } from './levels'
-
+const basePoints = 10
 const startX = 10
 const startY = 10
 const { blocksSeparatorX, blocksSeparatorY, blockWidth } = GAME_MEASUREMENTS
 /** Generate the blocks of the level provided */
-export const generateLevel = (level: number) => {
+export const generateLevel = (level: number, difficult: Difficult) => {
   const blocks = []
+  const multiplier = Object.values(Difficult).indexOf(difficult) + 1
+  const points = basePoints * multiplier
 
   // Representation of the block's level
   const levelBlocks = levels[level - 1]
@@ -25,7 +28,7 @@ export const generateLevel = (level: number) => {
         continue
       }
       // if the repesentation of the block IS a block
-      blocks.push(createBlock(x, y, 1))
+      blocks.push(createBlock(x, y, 1, points))
       x += blockWidth
     }
 

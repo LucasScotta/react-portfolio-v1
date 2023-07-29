@@ -19,7 +19,8 @@ export class Block extends Entity implements IBlock {
     x: number,
     y: number,
     public lives: number,
-    public color: string) {
+    public color: string,
+    public points: number) {
     super(x, y, blockWidth, blockHeight)
   }
 

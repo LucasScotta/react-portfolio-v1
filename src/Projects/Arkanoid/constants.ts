@@ -1,4 +1,4 @@
-import type { GameConfig, Paddle } from './types'
+import { Difficult, type GameConfig, type Paddle } from './types'
 
 /** Arkanoid Container Game Measurements */
 export const GAME_MEASUREMENTS = {
@@ -12,6 +12,7 @@ export const GAME_MEASUREMENTS = {
   paddleHeight: 25
 }
 
+/** Factor to scale entities */
 export const scaleFactor = 1000
 
 const { gameWidth, gameHeight, paddleWidth, paddleHeight } = GAME_MEASUREMENTS
@@ -19,15 +20,19 @@ const { gameWidth, gameHeight, paddleWidth, paddleHeight } = GAME_MEASUREMENTS
 /** Arkanoid Initial Config */
 export const INIT_ARKANOID_GAME: GameConfig = {
   start: false,
-  pause: false,
+  pause: true,
   width: gameWidth,
   height: gameHeight,
   level: 1,
   timeInterval: 10,
   lives: 3,
-  cheats: false
+  cheats: false,
+  difficult: Difficult.easy,
+  points: 0,
+  multiplier: 1
 }
 
+/** Paddle initial config */
 export const INIT_ARKANOID_PADDLE: Paddle = {
   x: gameWidth / 2 - paddleWidth / 2,
   y: gameHeight - paddleHeight * 2,

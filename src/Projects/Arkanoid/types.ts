@@ -9,6 +9,8 @@ export interface GameConfig {
   lives: number
   cheats: boolean
   difficult: Difficult
+  points: number
+  multiplier: number
 }
 
 export interface Entity {
@@ -30,6 +32,7 @@ export interface Ball extends Entity {
 export interface Block extends Entity {
   lives: number
   color: string
+  points: number
 }
 
 /** Paddle representation in-game */

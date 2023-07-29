@@ -10,5 +10,6 @@ import { getRandomBlockColor } from '../utils'
 export const createBlock = (
   x: number,
   y: number,
-  lives: number
-): Block => new Block(x, y, lives, getRandomBlockColor())
+  lives: number,
+  points: number,
+): Block => new Block(x, y, lives, getRandomBlockColor(), points)

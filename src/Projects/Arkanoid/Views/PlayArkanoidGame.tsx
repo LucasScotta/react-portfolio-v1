@@ -19,14 +19,14 @@ export const PlayArkanoidGame = ({ gameOptions }: Props) => {
   const startGame = () => {
     const blocks = blocksRef.current
     const balls = ballsRef.current
-    const { start } = game
+    const { start, pause } = game
     if (start) return
     setGame(prev => {
       /** Level blocks representation */
-      blocks.setItems(generateLevel(game.level))
+      blocks.setItems(generateLevel(game.level, game.difficult))
       balls.resetItems()
       addBall()
-      return { ...prev, start: !start }
+      return { ...prev, start: !start, pause: !pause }
     })
   }
 
@@ -51,11 +51,13 @@ export const PlayArkanoidGame = ({ gameOptions }: Props) => {
       const ball = createBall(paddleRef.current.x + paddleRef.current.width / 2, paddleRef.current.y - 11, 0, { height: game.height, width: game.width }, paddleRef.current)
       const blocks = blocksRef.current
       const balls = ballsRef.current
+      const points = 1000 * balls.getItems().length * prev.lives * prev.multiplier
+      console.log(balls, points, balls.getItems().length, prev.lives, prev.multiplier)
       balls.setItems([ball])
-      blocks.setItems(generateLevel(level))
-      return { ...prev, level }
+      blocks.setItems(generateLevel(level, game.difficult))
+      return { ...prev, level, points: prev.points + points }
     })
-  }, [game.width, game.height])
+  }, [game.width, game.height, game.difficult])
 
   /** Updates the game */
   const update = useCallback(() => {
@@ -71,13 +73,15 @@ export const PlayArkanoidGame = ({ gameOptions }: Props) => {
     if (!balls.getItems().length) {
       return loss()
     }
+    let points = 0
 
     setGame(prev => {
       for (const ball of balls.getItems()) {
 
         for (const block of blocks.getItems()) {
           // if the ball is coliding block
-          if (ball.isColiding(block)) {
+          if (ball.isColiding(block) && !block.destroyed) {
+            points += block.points * prev.multiplier * prev.lives * ballsRef.current.getItems().length
             block.hit()
             const angle = ball.calculateAngle(block)
             ball.angle = angle
@@ -89,7 +93,7 @@ export const PlayArkanoidGame = ({ gameOptions }: Props) => {
       // filter destroyed items
       blocksRef.current.removeDestroyed()
       ballsRef.current.removeDestroyed()
-      return { ...prev }
+      return { ...prev, points: prev.points + points }
     })
   }, [win, loss])
 
@@ -117,7 +121,10 @@ export const PlayArkanoidGame = ({ gameOptions }: Props) => {
   const switchPause = useCallback(() => setGame(prev => ({ ...prev, pause: !prev.pause })), [])
 
   const addBall = () => {
-    const ball = createBall(Math.floor(Math.random() * 300) + 15, Math.floor(Math.random() * 300) + 15, 3, { height: game.height, width: game.width }, paddleRef.current)
+    const randomX = Math.floor(Math.random() * gameWidth)
+    const randomY = Math.floor(Math.random() * gameHeight / 2)
+    const speed = 3
+    const ball = createBall(randomX, randomY, speed, { height: game.height, width: game.width }, paddleRef.current)
     ballsRef.current.addItem(ball)
   }
   /** UseEffect to switch pause */
@@ -151,9 +158,10 @@ export const PlayArkanoidGame = ({ gameOptions }: Props) => {
     {
       game.cheats && <Button className='Arkanoid-ingame-button' onClick={addBall} style={{ top: 100, left: gameWidth }}>Add Ball</Button>
     }
+    <Button className='Arkanoid-ingame-button' onClick={addBall} style={{ top: 100, left: gameWidth }}>Add Ball</Button>
     {
       game.start && (<>
-        <div className='Arkanoid-ingame-points' style={{ top: gameHeight - 40, left: 0 }}>Points: 0</div>
+        <div className='Arkanoid-ingame-points' style={{ top: gameHeight - 40, left: 0 }}>Points: {game.points}</div>
         <div className='Arkanoid-ingame-lives' style={{ top: gameHeight - 40, left: gameWidth - 100 }}>Lives: {game.lives}</div>
       </>
       )
