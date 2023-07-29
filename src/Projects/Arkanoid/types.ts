@@ -9,24 +9,22 @@ export interface GameConfig {
   lives: number
 }
 
-/** Ball representation in-game */
-export interface Ball {
+export interface Entity {
   id: number
   x: number
   y: number
   width: number
   height: number
+}
+
+/** Ball representation in-game */
+export interface Ball extends Entity {
   speed: number
   angle: number
 }
 
 /** Block representation in-game */
-export interface Block {
-  id: number
-  x: number
-  y: number
-  width: number
-  height: number
+export interface Block extends Entity {
   color: string
 }
 

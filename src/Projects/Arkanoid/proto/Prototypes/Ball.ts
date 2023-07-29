@@ -1,6 +1,6 @@
 import { Block, Ball as IBall, Paddle } from '../../types'
 import { scale } from '../../utils'
-import { generateId } from '../utils/'
+import { Entity } from './Entity'
 
 interface GameConfig {
   width: number
@@ -9,12 +9,8 @@ interface GameConfig {
 /**
  * Represents the in-game object ball
  */
-export class Ball implements IBall {
-  id: number
-  width = 10
-  height = 10
+export class Ball extends Entity implements IBall {
   angle = Math.PI * 1.75
-  destroyed = false
 
   /**
    * Creates a new ball instance
@@ -24,8 +20,13 @@ export class Ball implements IBall {
    * @param {GameConfig} gameConfig The game configuration containing width and height
    * @param {Paddle} paddle The paddle object used for collision detection
    */
-  constructor(public x: number, public y: number, public speed: number, private gameConfig: GameConfig, private paddle: Paddle) {
-    this.id = generateId()
+  constructor(
+    x: number,
+    y: number,
+    public speed: number,
+    private gameConfig: GameConfig,
+    private paddle: Paddle) {
+    super(x, y, 10, 10)
   }
 
   /**
@@ -34,7 +35,7 @@ export class Ball implements IBall {
    * @returns {number} The new angle of the ball after collision
    */
   calculateAngle(entity: Block | Paddle): number {
-    const scaledBall = scale(this)
+    const scaledBall = this.scale()
     const scaledEntity = scale(entity)
 
     // Calcular los límites de la bola y el bloque con las coordenadas escaladas
@@ -73,7 +74,7 @@ export class Ball implements IBall {
    * @returns {boolean} True if the ball is colliding with the entity, otherwise false
    */
   isColiding(entity: Block | Paddle) {
-    const scaledBall = scale(this)
+    const scaledBall = this.scale()
     const scaledEntity = scale(entity)
 
     // Calcular los límites de la bola y el bloque con las coordenadas escaladas
@@ -154,12 +155,4 @@ export class Ball implements IBall {
     this.x = x + speed * Math.cos(angle)
     this.y = y + speed * Math.sin(angle)
   }
-
-  /**
-   * Marks the ball as destroyed
-   */
-  destroy() {
-    this.destroyed = true
-  }
-
 }

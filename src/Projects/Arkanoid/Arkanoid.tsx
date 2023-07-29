@@ -101,7 +101,7 @@ const Arkanoid = () => {
 
   const addBall = () => {
     const { current } = ballsRef
-    ballsRef.current = [...current, createBall(Math.floor(Math.random() * 300) + 15, Math.floor(Math.random() * 300) + 15, 5, { height: game.height, width: game.width }, paddleRef.current)]
+    ballsRef.current = [...current, createBall(Math.floor(Math.random() * 300) + 15, Math.floor(Math.random() * 300) + 15, 2.5, { height: game.height, width: game.width }, paddleRef.current)]
   }
   /** UseEffect to switch pause */
   useEffect(() => {
