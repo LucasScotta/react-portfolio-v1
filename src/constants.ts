@@ -3,7 +3,8 @@ export const projectsPath = {
   TODO: '/todo',
   TATETI: '/tateti',
   TIKTAKTOE: '/tiktaktoe',
-  ARKANOID: '/arkanoid'
+  ARKANOID: '/arkanoid',
+  MEMORY_NUMBERS: '/memory-numbers'
 }
 
 export const localStorageKeys = {

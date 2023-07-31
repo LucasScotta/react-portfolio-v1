@@ -1,0 +1,32 @@
+.Memory-Numbers-App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* pulse animation */
+.Memory-Game-Numbers {
+  animation: pulse 1s infinite;
+}
+
+.Memory-Game-Container .user-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
