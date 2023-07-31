@@ -30,3 +30,26 @@
   align-items: center;
   gap: 20px;
 }
+
+.Memory-Game-Container .user-input input {
+  text-align: center;
+}
+
+.Memory-Game-Container .user-input input[type="number"]::-webkit-inner-spin-button,
+.Memory-Game-Container .user-input input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.Memory-Game-Container .user-input input[type="number"] {
+  /* Firefox */
+  -moz-appearance: textfield;
+  /* Otros navegadores */
+  appearance: textfield;
+}
+
+.Memory-Game-Container .number {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
