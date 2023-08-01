@@ -6,9 +6,10 @@ const ToDo = lazy(() => import('./Projects/Todo/Todo'))
 const Tateti = lazy(() => import('./Projects/Tateti/Tateti'))
 const Arkanoid = lazy(() => import('./Projects/Arkanoid/Arkanoid'))
 const MemoryNumbers = lazy(() => import('./Projects/Memory-Numbers/Memory-Numbers'))
+const TypingCounter = lazy(() => import('./Projects/Typing-Counter/Typing-Counter'))
 
 export const Router = () => {
-  const { HOME, TODO, TATETI, TIKTAKTOE, ARKANOID, MEMORY_NUMBERS } = projectsPath
+  const { HOME, TODO, TATETI, TIKTAKTOE, ARKANOID, MEMORY_NUMBERS, TYPING_COUNTER } = projectsPath
   return (
     <BrowserRouter>
       <Suspense fallback={<>LOADING...</>}>
@@ -19,6 +20,7 @@ export const Router = () => {
           <Route path={TIKTAKTOE} element={<Tateti />} />
           <Route path={ARKANOID} element={<Arkanoid />} />
           <Route path={MEMORY_NUMBERS} element={<MemoryNumbers />} />
+          <Route path={TYPING_COUNTER} element={<TypingCounter />} />
           <Route path="*" element={<Navigate to={HOME} replace />} />
         </Routes>
       </Suspense>

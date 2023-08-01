@@ -4,7 +4,8 @@ export const projectsPath = {
   TATETI: '/tateti',
   TIKTAKTOE: '/tiktaktoe',
   ARKANOID: '/arkanoid',
-  MEMORY_NUMBERS: '/memory-numbers'
+  MEMORY_NUMBERS: '/memory-numbers',
+  TYPING_COUNTER: '/typing-counter'
 }
 
 export const localStorageKeys = {
