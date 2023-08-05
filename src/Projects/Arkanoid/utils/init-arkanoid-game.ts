@@ -2,7 +2,7 @@ import { INIT_ARKANOID_GAME } from '../constants'
 import { Cheats, Difficult, GameConfig, GameUserOptions } from '../types'
 const getMultiplier = (difficult: Difficult) => Object.values(Difficult).indexOf(difficult) + 1
 const getBaseSpeed = (d: Difficult) => {
-  const { easy, medium, hard, insane } = Difficult
+  const { easy, medium, hard } = Difficult
   return d === easy
     ? 5
     : d === medium
